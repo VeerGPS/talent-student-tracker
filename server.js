@@ -31,7 +31,7 @@ let mongoDb = null;
 let mongoStatus = 'unconfigured'; // 'unconfigured' | 'connecting' | 'connected' | 'error'
 let lastSyncTime = null;
 let lastSyncTimestamp = Date.now();
-const DEFAULT_MONGODB_URI = '';
+const DEFAULT_MONGODB_URI = 'mongodb+srv://veersukhadiya97_db_user:YS3Bnc5X0ygXEYkt@talent-student-tracker.us1eitw.mongodb.net/?appName=talent-student-tracker';
 let activeUri = process.env.MONGODB_URI || null;
 
 // Read locally saved config if environment variable is not present

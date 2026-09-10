@@ -7,4 +7,4 @@ services:
     startCommand: "npm start"
     envVars:
       - key: MONGODB_URI
-        value: ""
+        value: "mongodb+srv://veersukhadiya97_db_user:YS3Bnc5X0ygXEYkt@talent-student-tracker.us1eitw.mongodb.net/?appName=talent-student-tracker"
