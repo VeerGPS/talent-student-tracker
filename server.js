@@ -31,7 +31,7 @@ let mongoDb = null;
 let mongoStatus = 'unconfigured'; // 'unconfigured' | 'connecting' | 'connected' | 'error'
 let lastSyncTime = null;
 let lastSyncTimestamp = Date.now();
-const DEFAULT_MONGODB_URI = 'mongodb+srv://veersukhadiya97_db_user:QFHPMCGI228RoYtR@gps-student-tracker.rqweari.mongodb.net/?appName=gps-student-tracker';
+const DEFAULT_MONGODB_URI = '';
 let activeUri = process.env.MONGODB_URI || null;
 
 // Read locally saved config if environment variable is not present
@@ -45,8 +45,8 @@ if (!activeUri && fs.existsSync(CONFIG_FILE)) {
   }
 }
 
-// Fallback to official cluster URI so cloud deployments (e.g. Render) auto-connect out of the box
-if (!activeUri) {
+// Fallback to cluster URI if configured
+if (!activeUri && DEFAULT_MONGODB_URI) {
   activeUri = DEFAULT_MONGODB_URI;
 }
 
