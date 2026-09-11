@@ -3740,8 +3740,12 @@ function openCloudDbModal() {
   // Pre-fill existing MongoDB URI or config if available
   const configInput = document.getElementById('cloud-config-input');
   if (configInput) {
-    const savedMongoUri = localStorage.getItem('ttc_mongodb_uri_v1') || (typeof CloudDB !== 'undefined' ? CloudDB.mongoUri : '');
+    let savedMongoUri = localStorage.getItem('ttc_mongodb_uri_v1') || (typeof CloudDB !== 'undefined' ? CloudDB.mongoUri : '');
     if (savedMongoUri) {
+      if (savedMongoUri.includes('<db_username>') || savedMongoUri.includes('<username>')) {
+        savedMongoUri = savedMongoUri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+        try { localStorage.setItem('ttc_mongodb_uri_v1', savedMongoUri); } catch (e) {}
+      }
       configInput.value = savedMongoUri;
     }
   }
@@ -3850,9 +3854,14 @@ async function handleSaveFirebaseConfig() {
 
   // If input is MongoDB Connection String
   if (rawText.startsWith('mongodb://') || rawText.startsWith('mongodb+srv://') || rawText.includes('mongodb.net')) {
+    let cleanUri = rawText;
+    if (cleanUri.includes('<db_username>') || cleanUri.includes('<username>')) {
+      cleanUri = cleanUri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+      if (input) input.value = cleanUri;
+    }
     try {
       showToast('Connecting to MongoDB Atlas Cluster...', 'info');
-      const res = await CloudDB.connectMongo(rawText);
+      const res = await CloudDB.connectMongo(cleanUri);
       if (res && res.success) {
         showToast('✔ Successfully connected to MongoDB Atlas! Data will now sync live across all devices.', 'success');
         const linkInput = document.getElementById('cloud-modal-live-link');

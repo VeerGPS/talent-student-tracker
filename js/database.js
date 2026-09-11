@@ -9,11 +9,31 @@ const BACKEND_API_KEY = 'ttc_backend_api_url';
 const CLOUD_CONFIG_KEY = 'ttc_firebase_config_v1';
 const CLOUD_META_KEY = 'ttc_cloud_metadata_v1';
 
+const OFFICIAL_TALENT_URI = 'mongodb+srv://veersukhadiya97_db_user:YS3Bnc5X0ygXEYkt@talent-student-tracker.us1eitw.mongodb.net/?appName=talent-student-tracker';
+
+// Self-healing: automatically repair placeholder or stale URIs in browser localStorage
+try {
+  if (typeof localStorage !== 'undefined') {
+    const rawSaved = localStorage.getItem(MONGODB_CONFIG_KEY);
+    if (rawSaved) {
+      if (rawSaved.includes('<db_username>') || rawSaved.includes('<username>')) {
+        const healed = rawSaved.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+        localStorage.setItem(MONGODB_CONFIG_KEY, healed);
+        console.log('✔ [CloudDB] Auto-healed <db_username> in localStorage to veersukhadiya97_db_user');
+      } else if (rawSaved.includes('gps-student-tracker')) {
+        localStorage.setItem(MONGODB_CONFIG_KEY, OFFICIAL_TALENT_URI);
+      }
+    } else {
+      localStorage.setItem(MONGODB_CONFIG_KEY, OFFICIAL_TALENT_URI);
+    }
+  }
+} catch (e) {}
+
 const CloudDB = {
   dbType: 'mongodb', // 'mongodb' | 'firebase' | 'local'
   status: 'unconfigured', // 'unconfigured' | 'connecting' | 'connected' | 'offline' | 'error'
   lastSyncTime: null,
-  mongoUri: null,
+  mongoUri: OFFICIAL_TALENT_URI,
   databaseName: 'talent_tution_classes',
   isSyncing: false,
   apiAvailable: false,
@@ -180,14 +200,38 @@ const CloudDB = {
 
       if (data.connected) {
         console.log('✔ Connected to MongoDB Atlas via Backend API:', this.databaseName);
+        this.status = 'connected';
+        this.lastError = null;
         await this.syncFromCloud();
         this.updateBadgeUI();
         this.initRealtimeSync();
         return;
-      } else {
-        // Check if user has saved a MongoDB URI in localStorage
-        const savedUri = (typeof localStorage !== 'undefined') ? localStorage.getItem(MONGODB_CONFIG_KEY) : null;
+      } else if (data.status === 'connecting') {
+        console.log('⏳ Backend is connecting to MongoDB Atlas... waiting for initial handshake');
+        this.status = 'connecting';
+        this.updateBadgeUI();
+        for (let i = 0; i < 5; i++) {
+          await new Promise(r => setTimeout(r, 1000));
+          const checkResp = await this.pingApiEndpoint(this.apiBaseUrl);
+          if (checkResp.ok && checkResp.data && checkResp.data.connected) {
+            console.log('✔ Handshake complete: MongoDB Atlas connected!');
+            this.status = 'connected';
+            this.lastError = null;
+            this.databaseName = checkResp.data.database || this.databaseName;
+            await this.syncFromCloud();
+            this.updateBadgeUI();
+            this.initRealtimeSync();
+            return;
+          }
+        }
+      } else if (!data.hasUri) {
+        // Backend is completely unconfigured - check if user has a valid saved URI in localStorage
+        let savedUri = (typeof localStorage !== 'undefined') ? localStorage.getItem(MONGODB_CONFIG_KEY) : null;
         if (savedUri) {
+          if (savedUri.includes('<db_username>') || savedUri.includes('<username>')) {
+            savedUri = savedUri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+            localStorage.setItem(MONGODB_CONFIG_KEY, savedUri);
+          }
           await this.connectMongo(savedUri);
           this.initRealtimeSync();
           return;
@@ -196,8 +240,12 @@ const CloudDB = {
     }
 
     // Fallback: Local Storage / Standalone mode
-    const savedUri = (typeof localStorage !== 'undefined') ? localStorage.getItem(MONGODB_CONFIG_KEY) : null;
+    let savedUri = (typeof localStorage !== 'undefined') ? localStorage.getItem(MONGODB_CONFIG_KEY) : null;
     if (savedUri) {
+      if (savedUri.includes('<db_username>') || savedUri.includes('<username>')) {
+        savedUri = savedUri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+        try { localStorage.setItem(MONGODB_CONFIG_KEY, savedUri); } catch (e) {}
+      }
       this.mongoUri = savedUri;
       this.status = this.apiAvailable ? 'connecting' : 'offline';
     } else {
@@ -215,6 +263,10 @@ const CloudDB = {
     }
 
     uri = uri.trim();
+    if (uri.includes('<db_username>') || uri.includes('<username>')) {
+      uri = uri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+    }
+
     this.status = 'connecting';
     this.updateBadgeUI();
 

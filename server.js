@@ -50,10 +50,19 @@ if (!activeUri && DEFAULT_MONGODB_URI) {
   activeUri = DEFAULT_MONGODB_URI;
 }
 
+if (activeUri && (activeUri.includes('<db_username>') || activeUri.includes('<username>'))) {
+  activeUri = activeUri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+}
+
 async function connectToMongo(uri) {
   if (!uri) {
     mongoStatus = 'unconfigured';
     return { success: false, message: 'No MongoDB URI provided' };
+  }
+
+  uri = uri.trim();
+  if (uri.includes('<db_username>') || uri.includes('<username>')) {
+    uri = uri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
   }
 
   mongoStatus = 'connecting';
@@ -143,12 +152,17 @@ app.get('/api/db/status', (req, res) => {
 
 // 2. Set / Update MongoDB Atlas Connection String
 app.post('/api/db/connect', async (req, res) => {
-  const { uri } = req.body;
+  let { uri } = req.body;
   if (!uri || typeof uri !== 'string') {
     return res.status(400).json({ success: false, error: 'Valid MongoDB connection string is required.' });
   }
 
-  const result = await connectToMongo(uri.trim());
+  uri = uri.trim();
+  if (uri.includes('<db_username>') || uri.includes('<username>')) {
+    uri = uri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
+  }
+
+  const result = await connectToMongo(uri);
   if (result.success) {
     res.json({ success: true, status: 'connected', message: 'Successfully connected to MongoDB Atlas!' });
   } else {
