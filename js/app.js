@@ -1589,7 +1589,7 @@ function renderStudentsTable() {
         </span>
       </td>
       <td class="p-4 text-xs font-semibold text-slate-600">
-        ${s.mobile ? `<i class="fa-brands fa-whatsapp text-emerald-500 mr-1"></i>${s.mobile}` : '<span class="opacity-40 italic">None</span>'}
+        ${typeof renderContactCell === 'function' ? renderContactCell(s.mobile) : (s.mobile ? `<i class="fa-brands fa-whatsapp text-emerald-500 mr-1"></i>${s.mobile}` : '<span class="opacity-40 italic">None</span>')}
       </td>
       <td class="p-4 text-center space-x-1.5 whitespace-nowrap">
         <button onclick="printSingleStudentGujarati(${s.roll}, '${s.std || ''}', 'વિદ્યાર્થી પ્રગતિ પત્રક')" class="bg-white text-indigo-600 hover:bg-indigo-600 hover:text-white px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all border border-indigo-200 shadow-sm" title="Print/Save Gujarati Report Card">
@@ -3416,14 +3416,7 @@ function renderManagementStudentDirectory(scopeStd) {
           ${pct !== '-' ? pct + '%' : '-'}
         </td>
         <td class="p-3 text-slate-600 text-xs">
-          ${s.mobile ? `
-            <div class="flex items-center gap-1.5">
-              <span>${s.mobile}</span>
-              <a href="https://wa.me/${s.mobile}" target="_blank" class="text-emerald-600 hover:text-emerald-700">
-                <i class="fa-brands fa-whatsapp"></i>
-              </a>
-            </div>
-          ` : '<span class="text-slate-400">-</span>'}
+          ${typeof renderContactCell === 'function' ? renderContactCell(s.mobile) : (s.mobile ? `<span>${s.mobile}</span>` : '<span class="text-slate-400">-</span>')}
         </td>
         <td class="p-3 text-right">
           <div class="flex items-center justify-end gap-1.5">
