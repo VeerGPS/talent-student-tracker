@@ -15,158 +15,13 @@ const STORAGE_KEYS = {
 // Initial Seed Dataset for Talent Tution Classes
 const SEED_TEACHERS = [];
 
-const SEED_STUDENTS = [
-  // Class 8 Students
-  { grNo: 'GR-2024-081', roll: 101, name: 'આદિત્ય દવે', std: '8', section: 'A', mobile: '9876500001' },
-  { grNo: 'GR-2024-082', roll: 102, name: 'ભાવના રાઠોડ', std: '8', section: 'A', mobile: '9876500002' },
-  { grNo: 'GR-2024-083', roll: 103, name: 'ચિરાગ સોલંકી', std: '8', section: 'A', mobile: '9876500003' },
-  { grNo: 'GR-2024-084', roll: 104, name: 'દીપિકા ઐયર', std: '8', section: 'A', mobile: '9876500004' },
-  { grNo: 'GR-2024-085', roll: 105, name: 'ઈશાન ગુપ્તા', std: '8', section: 'A', mobile: '9876500005' },
+const SEED_STUDENTS = [];
 
-  // Class 9 Students
-  { grNo: 'GR-2024-001', roll: 101, name: 'આરવ પટેલ', std: '9', section: 'A', mobile: '9876543210' },
-  { grNo: 'GR-2024-002', roll: 102, name: 'પ્રિયા શાહ', std: '9', section: 'A', mobile: '9123456780' },
-  { grNo: 'GR-2024-003', roll: 103, name: 'રોહન મહેતા', std: '9', section: 'A', mobile: '9988776655' },
-  { grNo: 'GR-2024-004', roll: 104, name: 'અનન્યા જોશી', std: '9', section: 'A', mobile: '9822001122' },
-  { grNo: 'GR-2024-005', roll: 105, name: 'કબીર સિંઘાનિયા', std: '9', section: 'A', mobile: '9765432109' },
-  { grNo: 'GR-2024-006', roll: 106, name: 'સ્નેહા કુલકર્ણી', std: '9', section: 'B', mobile: '9654321987' },
-  { grNo: 'GR-2024-007', roll: 107, name: 'દેવેન્દ્ર દવે', std: '9', section: 'B', mobile: '9543219876' },
-  { grNo: 'GR-2024-008', roll: 108, name: 'ઈશા ત્રિવેદી', std: '9', section: 'B', mobile: '9432198765' },
-  { grNo: 'GR-2024-009', roll: 109, name: 'આર્યન ભટ્ટ', std: '9', section: 'A', mobile: '9321987654' },
-  { grNo: 'GR-2024-010', roll: 110, name: 'દિયા પરીખ', std: '9', section: 'A', mobile: '9210987653' },
-  { grNo: 'GR-2024-011', roll: 111, name: 'માનવ દેસાઈ', std: '9', section: 'B', mobile: '9109876542' },
-  { grNo: 'GR-2024-012', roll: 112, name: 'તન્વી પંચાલ', std: '9', section: 'B', mobile: '9098765431' },
+const SEED_MARKS = [];
 
-  // Class 10 Students
-  { grNo: 'GR-2024-101', roll: 101, name: 'હર્ષવર્ધન રાણા', std: '10', section: 'A', mobile: '9876500011' },
-  { grNo: 'GR-2024-102', roll: 102, name: 'જાનવી ભટ્ટ', std: '10', section: 'A', mobile: '9876500012' },
-  { grNo: 'GR-2024-103', roll: 103, name: 'કૃણાલ કપૂર', std: '10', section: 'A', mobile: '9876500013' },
-  { grNo: 'GR-2024-104', roll: 104, name: 'લિપિકા સેન', std: '10', section: 'A', mobile: '9876500014' },
-  { grNo: 'GR-2024-105', roll: 105, name: 'મોહિત રાવત', std: '10', section: 'A', mobile: '9876500015' }
-];
+const SEED_UPCOMING_TESTS = [];
 
-const SEED_MARKS = [
-  // Class 8 Marks
-  { id: 8001, grNo: 'GR-2024-081', roll: 101, std: '8', subject: 'ગણિત', topic: 'સંમેય સંખ્યાઓ', marks: 45, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 8002, grNo: 'GR-2024-082', roll: 102, std: '8', subject: 'ગણિત', topic: 'સંમેય સંખ્યાઓ', marks: 48, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 8003, grNo: 'GR-2024-083', roll: 103, std: '8', subject: 'ગણિત', topic: 'સંમેય સંખ્યાઓ', marks: 32, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 8004, grNo: 'GR-2024-084', roll: 104, std: '8', subject: 'ગણિત', topic: 'સંમેય સંખ્યાઓ', marks: 50, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 8005, grNo: 'GR-2024-085', roll: 105, std: '8', subject: 'ગણિત', topic: 'સંમેય સંખ્યાઓ', marks: 0, total: 50, date: '2026-08-10', isAbsent: true, source: 'excel' },
-
-  { id: 8006, grNo: 'GR-2024-081', roll: 101, std: '8', subject: 'વિજ્ઞાન', topic: 'પાક ઉત્પાદન', marks: 43, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 8007, grNo: 'GR-2024-082', roll: 102, std: '8', subject: 'વિજ્ઞાન', topic: 'પાક ઉત્પાદન', marks: 47, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 8008, grNo: 'GR-2024-083', roll: 103, std: '8', subject: 'વિજ્ઞાન', topic: 'પાક ઉત્પાદન', marks: 36, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 8009, grNo: 'GR-2024-084', roll: 104, std: '8', subject: 'વિજ્ઞાન', topic: 'પાક ઉત્પાદન', marks: 49, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 8010, grNo: 'GR-2024-085', roll: 105, std: '8', subject: 'વિજ્ઞાન', topic: 'પાક ઉત્પાદન', marks: 40, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-
-  // Class 9 Marks
-  { id: 1001, grNo: 'GR-2024-001', roll: 101, std: '9', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 47, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 1002, grNo: 'GR-2024-002', roll: 102, std: '9', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 44, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 1003, grNo: 'GR-2024-003', roll: 103, std: '9', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 16, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 1004, grNo: 'GR-2024-004', roll: 104, std: '9', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 49, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 1005, grNo: 'GR-2024-005', roll: 105, std: '9', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 0, total: 50, date: '2026-08-10', isAbsent: true, source: 'excel' },
-  
-  { id: 1006, grNo: 'GR-2024-001', roll: 101, std: '9', subject: 'વિજ્ઞાન', topic: 'પ્રકાશ અને પરાવર્તન', marks: 46, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 1007, grNo: 'GR-2024-002', roll: 102, std: '9', subject: 'વિજ્ઞાન', topic: 'પ્રકાશ અને પરાવર્તન', marks: 42, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 1008, grNo: 'GR-2024-003', roll: 103, std: '9', subject: 'વિજ્ઞાન', topic: 'પ્રકાશ અને પરાવર્તન', marks: 35, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 1009, grNo: 'GR-2024-004', roll: 104, std: '9', subject: 'વિજ્ઞાન', topic: 'પ્રકાશ અને પરાવર્તન', marks: 48, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-  { id: 1010, grNo: 'GR-2024-005', roll: 105, std: '9', subject: 'વિજ્ઞાન', topic: 'પ્રકાશ અને પરાવર્તન', marks: 38, total: 50, date: '2026-08-18', isAbsent: false, source: 'excel' },
-
-  { id: 1011, grNo: 'GR-2024-001', roll: 101, std: '9', subject: 'અંગ્રેજી', topic: 'Grammar & Prose', marks: 23, total: 25, date: '2026-08-25', isAbsent: false, source: 'excel' },
-  { id: 1012, grNo: 'GR-2024-002', roll: 102, std: '9', subject: 'અંગ્રેજી', topic: 'Grammar & Prose', marks: 24, total: 25, date: '2026-08-25', isAbsent: false, source: 'excel' },
-  { id: 1013, grNo: 'GR-2024-003', roll: 103, std: '9', subject: 'અંગ્રેજી', topic: 'Grammar & Prose', marks: 14, total: 25, date: '2026-08-25', isAbsent: false, source: 'excel' },
-  { id: 1014, grNo: 'GR-2024-004', roll: 104, std: '9', subject: 'અંગ્રેજી', topic: 'Grammar & Prose', marks: 22, total: 25, date: '2026-08-25', isAbsent: false, source: 'excel' },
-  { id: 1015, grNo: 'GR-2024-005', roll: 105, std: '9', subject: 'અંગ્રેજી', topic: 'Grammar & Prose', marks: 19, total: 25, date: '2026-08-25', isAbsent: false, source: 'excel' },
-
-  // Class 10 Marks
-  { id: 10001, grNo: 'GR-2024-101', roll: 101, std: '10', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 46, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 10002, grNo: 'GR-2024-102', roll: 102, std: '10', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 49, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 10003, grNo: 'GR-2024-103', roll: 103, std: '10', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 28, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 10004, grNo: 'GR-2024-104', roll: 104, std: '10', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 42, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' },
-  { id: 10005, grNo: 'GR-2024-105', roll: 105, std: '10', subject: 'ગણિત', topic: 'વાસ્તવિક સંખ્યાઓ', marks: 39, total: 50, date: '2026-08-10', isAbsent: false, source: 'excel' }
-];
-
-const SEED_UPCOMING_TESTS = [
-  {
-    id: 1,
-    subject: 'Mathematics',
-    std: '9',
-    section: 'A',
-    topic: 'Trigonometry & Coordinate Geometry',
-    date: '2026-09-12',
-    totalMarks: 50,
-    room: 'Room 204'
-  },
-  {
-    id: 2,
-    subject: 'Science',
-    std: '9',
-    section: 'A',
-    topic: 'Chemical Reactions & Equations',
-    date: '2026-09-18',
-    totalMarks: 50,
-    room: 'Science Lab 1'
-  },
-  {
-    id: 3,
-    subject: 'Mathematics',
-    std: '8',
-    section: 'A',
-    topic: 'Linear Equations in One Variable',
-    date: '2026-09-15',
-    totalMarks: 50,
-    room: 'Room 102'
-  },
-  {
-    id: 4,
-    subject: 'Science',
-    std: '10',
-    section: 'A',
-    topic: 'Acids, Bases & Salts',
-    date: '2026-09-20',
-    totalMarks: 50,
-    room: 'Science Lab 2'
-  }
-];
-
-const SEED_ATTENDANCE = [
-  {
-    date: '2026-09-07',
-    std: '8',
-    section: 'A',
-    records: [
-      { roll: 101, status: 'P' },
-      { roll: 102, status: 'P' },
-      { roll: 103, status: 'P' },
-      { roll: 104, status: 'P' },
-      { roll: 105, status: 'A' }
-    ]
-  },
-  {
-    date: '2026-09-07',
-    std: '9',
-    section: 'A',
-    records: [
-      { roll: 101, status: 'P' },
-      { roll: 102, status: 'P' },
-      { roll: 103, status: 'A' },
-      { roll: 104, status: 'P' },
-      { roll: 105, status: 'L' }
-    ]
-  },
-  {
-    date: '2026-09-07',
-    std: '10',
-    section: 'A',
-    records: [
-      { roll: 101, status: 'P' },
-      { roll: 102, status: 'P' },
-      { roll: 103, status: 'P' },
-      { roll: 104, status: 'P' },
-      { roll: 105, status: 'P' }
-    ]
-  }
-];
+const SEED_ATTENDANCE = [];
 
 // App Global In-Memory Store
 let DB = {
@@ -290,13 +145,12 @@ function switchTeacherContext(teacherId, isBrandNew = false) {
     }
   } else {
     // No specific data saved yet for this teacher
-    if (teacherId === 'T-101' || teacherId === 'T-102') {
-      // Demo teachers get sample demo dataset
-      DB.students = JSON.parse(JSON.stringify(SEED_STUDENTS));
-      DB.marks = JSON.parse(JSON.stringify(SEED_MARKS));
-      DB.attendance = JSON.parse(JSON.stringify(SEED_ATTENDANCE));
-      DB.upcomingTests = JSON.parse(JSON.stringify(SEED_UPCOMING_TESTS));
-    } else {
+    // Custom or new teacher: start clean
+    DB.students = [];
+    DB.marks = [];
+    DB.attendance = [];
+    DB.upcomingTests = [];
+    if (false) {
       // Custom/new teacher accounts: start with 100% empty rosters until they upload tally excel!
       DB.students = [];
       DB.marks = [];
@@ -321,6 +175,30 @@ function initDatabase() {
     loadedTeachers = loadedTeachers.filter(t => t.id !== 'T-101' && t.id !== 'T-102' && t.id !== 'T-999999');
     DB.teachers = loadedTeachers;
     DB.activeSession = rawSession ? JSON.parse(rawSession) : null;
+
+    // Purge legacy demo keys and demo students from local storage
+    const legacyDemoKeys = [
+      'ttc_t_T-101_students', 'ttc_t_T-101_marks', 'ttc_t_T-101_attendance', 'ttc_t_T-101_upcoming_tests',
+      'ttc_t_T-102_students', 'ttc_t_T-102_marks', 'ttc_t_T-102_attendance', 'ttc_t_T-102_upcoming_tests',
+      'ttc_t_T-999999_students', 'ttc_t_T-999999_marks', 'ttc_t_T-999999_attendance', 'ttc_t_T-999999_upcoming_tests',
+      'gps_t_T-101_students', 'gps_t_T-101_marks', 'gps_t_T-101_attendance', 'gps_t_T-101_upcoming_tests',
+      'gps_t_T-102_students', 'gps_t_T-102_marks', 'gps_t_T-102_attendance', 'gps_t_T-102_upcoming_tests',
+      'gps_t_T-999999_students', 'gps_t_T-999999_marks', 'gps_t_T-999999_attendance', 'gps_t_T-999999_upcoming_tests'
+    ];
+    legacyDemoKeys.forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+
+    const ALL_DEMO_NAMES = new Set(["Aditya Dave","Bhavna Rathod","Chirag Solanki","Deepika Iyer","Eshaan Gupta","Aarav Patel","Priya Shah","Rohan Mehta","Ananya Joshi","Kabir Singhania","Sneha Kulkarni","Devendra Dave","Isha Trivedi","Aryan Bhatt","Diya Parikh","Manav Desai","Tanvi Panchal","Harshvardhan Rana","Janvi Bhatt","Kunal Kapoor","Lipika Sen","Mohit Rawat","આદિત્ય દવે","ભાવના રાઠોડ","ચિરાગ સોલંકી","દીપિકા ઐયર","ઈશાન ગુપ્તા","આરવ પટેલ","પ્રિયા શાહ","રોહન મહેતા","અનન્યા જોશી","કબીર સિંઘાનિયા","સ્નેહા કુલકર્ણી","દેવેન્દ્ર દવે","ઈશા ત્રિવેદી","આર્યન ભટ્ટ","દિયા પરીખ","માનવ દેસાઈ","તન્વી પંચાલ","હર્ષવર્ધન રાણા","જાનવી ભટ્ટ","કૃણાલ કપૂર","લિપિકા સેન","મોહિત રાવત","દિયા મહેતા","કૃણાલ પંડ્યા","માનસી સોની","પૂજા ચોકસી","વિવેક ઠાકોર","નિધિ પંચાલ","યશ પારેખ","તનિષ્ક જૈન","ખુશી બારોટ","હેત શાહ","દિશા રાવલ","ઓમ સોલંકી","રિદ્ધિ પટેલ","તન્વી દેસાઈ","જય શાહ","ભાવેશ જોશી"]);
+    if (Array.isArray(DB.students)) {
+      const hadDemo = DB.students.some(s => s && s.name && (ALL_DEMO_NAMES.has(s.name.trim()) || (s.grNo && (s.grNo.startsWith('GR-2024-08') || s.grNo.startsWith('GR-2024-00') || s.grNo.startsWith('GR-2024-10')))));
+      if (hadDemo) {
+        console.log('✔ Purging demo students from DB.students');
+        DB.students = DB.students.filter(s => s && s.name && !ALL_DEMO_NAMES.has(s.name.trim()) && !(s.grNo && (s.grNo.startsWith('GR-2024-08') || s.grNo.startsWith('GR-2024-00') || s.grNo.startsWith('GR-2024-10'))));
+        const validRolls = new Set(DB.students.map(s => s.roll));
+        if (Array.isArray(DB.marks)) DB.marks = DB.marks.filter(m => validRolls.has(m.roll));
+        if (Array.isArray(DB.attendance)) DB.attendance = DB.attendance.filter(a => validRolls.has(a.roll));
+      }
+    }
+
     try {
       localStorage.setItem(STORAGE_KEYS.TEACHERS, JSON.stringify(DB.teachers));
     } catch (e) {}
@@ -454,7 +332,6 @@ function saveDatabase(triggerCloud = true) {
 // Factory Reset & Data Management
 function factoryResetData(mode = 'wipe') {
   if (mode === 'wipe') {
-    // 100% clean slate: erase all students, marks, attendance, and tests
     DB.students = [];
     DB.marks = [];
     DB.attendance = [];
@@ -473,7 +350,6 @@ function factoryResetData(mode = 'wipe') {
       window.showToast('Factory Reset complete: All student and marks data have been wiped.', 'success');
     }
   } else if (mode === 'marks_only') {
-    // Clear marks, attendance, and upcoming tests, but keep student directory
     DB.marks = [];
     DB.attendance = [];
     DB.upcomingTests = [];
@@ -491,28 +367,18 @@ function factoryResetData(mode = 'wipe') {
       window.showToast('All examination marks, attendance, and test records cleared.', 'success');
     }
   } else if (mode === 'seed' || mode === 'demo') {
-    // Restore default sample dataset for current teacher
-    DB.students = JSON.parse(JSON.stringify(SEED_STUDENTS));
-    DB.marks = JSON.parse(JSON.stringify(SEED_MARKS));
-    DB.attendance = JSON.parse(JSON.stringify(SEED_ATTENDANCE));
-    DB.upcomingTests = JSON.parse(JSON.stringify(SEED_UPCOMING_TESTS));
-
-    const activeTId = getActiveTeacherId ? getActiveTeacherId() : (DB.activeSession && DB.activeSession.teacher ? DB.activeSession.teacher.id : 'T-101');
+    DB.students = [];
+    DB.marks = [];
+    DB.attendance = [];
+    DB.upcomingTests = [];
+    const activeTId = getActiveTeacherId ? getActiveTeacherId() : (DB.activeSession && DB.activeSession.teacher ? DB.activeSession.teacher.id : null);
     if (activeTId) saveTeacherData(activeTId);
-
     saveDatabase(false);
-    if (typeof CloudDB !== 'undefined' && typeof CloudDB.resetCloudData === 'function') {
-      CloudDB.resetCloudData('seed');
-    }
     refreshAllModulesUI();
-
-    if (window.showToast) {
-      window.showToast('Sample demo dataset (22 students) restored!', 'success');
-    }
+    if (window.showToast) window.showToast('Demo dataset removed. Database is clean.', 'info');
   }
 }
 
-// Dedicated function: Clears only test excel marks, keeping student directory and teacher accounts safe!
 function resetTestDataOnly() {
   DB.marks = [];
   const activeTId = getActiveTeacherId ? getActiveTeacherId() : (DB.activeSession && DB.activeSession.teacher ? DB.activeSession.teacher.id : null);

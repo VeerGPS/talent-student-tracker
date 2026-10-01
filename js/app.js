@@ -519,7 +519,7 @@ function handleTeacherSigninSubmit(e) {
 }
 
 function fillDemoTeacher() {
-  // Demo credentials removed per production privacy configuration
+  // Demo credentials disabled
 }
 
 // -------------------------------------------------------------
@@ -3864,13 +3864,11 @@ function closeFactoryResetModal() {
   if (modal) modal.classList.add('hidden');
 }
 
-function confirmFactoryReset(mode) {
-  closeFactoryResetModal();
-
+function confirmFactoryReset(mode = 'wipe') {
   if (mode === 'wipe') {
     openConfirmModal(
-      'Factory Reset: Wipe All Data',
-      'Are you absolutely sure you want to permanently erase ALL student records, assessment scores, attendance logs, and upcoming exam schedules? This cannot be undone and will restore a completely clean database.',
+      'Factory Reset Entire System',
+      'Are you completely sure you want to wipe all classrooms, students, exam records, marks, and attendance? This resets the tracker to a 100% clean blank slate.',
       () => {
         if (window.factoryResetData) {
           window.factoryResetData('wipe');
@@ -3888,76 +3886,12 @@ function confirmFactoryReset(mode) {
       }
     );
   } else if (mode === 'seed' || mode === 'demo') {
-    openConfirmModal(
-      'Restore Sample Demo Dataset',
-      'Are you sure you want to reset the database and restore default Class 9 sample students, subject scores, and test schedules?',
-      () => {
-        if (window.factoryResetData) {
-          window.factoryResetData('seed');
-        }
-      }
-    );
+    showToast('Demo dataset has been removed from this system.', 'info');
   }
 }
 
-// -------------------------------------------------------------
-// CLOUD DATABASE & LIVE LINK MODAL CONTROLS
-// -------------------------------------------------------------
-// CLOUD DATABASE (MONGODB ATLAS) MODAL LOGIC
-// -------------------------------------------------------------
-
 function openCloudDbModal() {
-  const modal = document.getElementById('cloud-db-modal');
-  if (!modal) return;
-  modal.classList.remove('hidden');
-
-  // Fill in live link and dynamically generate matching QR code
-  const liveLink = (typeof CloudDB !== 'undefined') ? CloudDB.getLiveLink() : 'http://192.168.1.12:5000';
-  const linkInput = document.getElementById('cloud-modal-live-link');
-  if (linkInput) {
-    linkInput.value = liveLink;
-  }
-
-  const qrImg = document.getElementById('cloud-modal-qr-code');
-  if (qrImg) {
-    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(liveLink)}`;
-  }
-
-  const targetIpEl = document.getElementById('cloud-modal-target-ip');
-  if (targetIpEl) {
-    targetIpEl.textContent = liveLink;
-  }
-
-  // Pre-fill existing MongoDB URI or config if available
-  const configInput = document.getElementById('cloud-config-input');
-  if (configInput) {
-    let savedMongoUri = localStorage.getItem('ttc_mongodb_uri_v1') || (typeof CloudDB !== 'undefined' ? CloudDB.mongoUri : '');
-    if (savedMongoUri) {
-      if (savedMongoUri.includes('<db_username>') || savedMongoUri.includes('<username>')) {
-        savedMongoUri = savedMongoUri.replace(/<db_username>/g, 'veersukhadiya97_db_user').replace(/<username>/g, 'veersukhadiya97_db_user');
-        try { localStorage.setItem('ttc_mongodb_uri_v1', savedMongoUri); } catch (e) {}
-      }
-      configInput.value = savedMongoUri;
-    }
-  }
-
-  // Pre-fill custom backend URL if set
-  const customBackendInput = document.getElementById('custom-backend-url-input');
-  if (customBackendInput) {
-    customBackendInput.value = localStorage.getItem('ttc_backend_api_url') || '';
-  }
-
-  if (typeof CloudDB !== 'undefined') {
-    CloudDB.updateBadgeUI();
-    // Re-verify backend API in background to ensure status is fresh
-    CloudDB.resolveApiUrl().then(() => {
-      CloudDB.updateBadgeUI();
-      const freshLink = CloudDB.getLiveLink();
-      if (linkInput) linkInput.value = freshLink;
-      if (qrImg) qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(freshLink)}`;
-      if (targetIpEl) targetIpEl.textContent = freshLink;
-    }).catch(() => {});
-  }
+  // MongoDB modal disabled
 }
 
 function closeCloudDbModal() {

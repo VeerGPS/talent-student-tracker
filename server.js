@@ -215,13 +215,7 @@ app.post('/api/db/sync', async (req, res) => {
     const collection = mongoDb.collection('school_data');
     const existingDoc = await collection.findOne({ _id: 'talent_tution_classes' });
 
-    const gujaratiFallbackNames = [
-      'આરવ પટેલ', 'પ્રિયા શાહ', 'રોહન મહેતા', 'અનન્યા જોશી', 'કબીર સિંઘાનિયા',
-      'સ્નેહા કુલકર્ણી', 'દેવેન્દ્ર દવે', 'ઈશા ત્રિવેદી', 'આર્યન ભટ્ટ', 'દિયા મહેતા',
-      'હર્ષવર્ધન રાણા', 'કૃણાલ પંડ્યા', 'માનસી સોની', 'પૂજા ચોકસી', 'વિવેક ઠાકોર',
-      'નિધિ પંચાલ', 'યશ પારેખ', 'તનિષ્ક જૈન', 'ખુશી બારોટ', 'હેત શાહ',
-      'દિશા રાવલ', 'ઓમ સોલંકી', 'રિદ્ધિ પટેલ', 'તન્વી દેસાઈ', 'જય શાહ', 'ભાવેશ જોશી'
-    ];
+    const gujaratiFallbackNames = [];
 
     const gujSubs = ['ગણિત', 'વિજ્ઞાન', 'અંગ્રેજી', 'સામાજિક વિજ્ઞાન', 'ગુજરાતી', 'હિન્દી'];
 
@@ -234,7 +228,7 @@ app.post('/api/db/sync', async (req, res) => {
             : null;
           const healedName = (exStu && exStu.name && !exStu.name.includes('???') && !/^[?\s.-]{3,}$/.test(exStu.name))
             ? exStu.name
-            : (gujaratiFallbackNames[idx % gujaratiFallbackNames.length]);
+            : ('વિદ્યાર્થી ' + (s.roll || idx + 1));
           return { ...s, name: healedName };
         }
         return s;
